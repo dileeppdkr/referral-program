@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hello <%= @email %>,</p>
+    <p> You got a referral from <%= @user.email%>, Click on below link to register <a href="http://localhost:3000/SignUp?referred_by_id=<%= @user.id %>"> Click to Register</a></p>
+  </body>
+</html>

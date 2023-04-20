@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+require "fileutils"
+
+# path to your application root.
+APP_ROOT = File.expand_path("..", __dir__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+FileUtils.chdir APP_ROOT do
+ # Start Rails server in the background
+  puts "Starting Rails server..."
+  system("bin/rails server -d")
+
+  # Wait for Rails server to start
+  puts "Waiting for Rails server to start..."
+  loop do
+    response = `curl -s http://localhost:3001`
+    break if response.include?("Welcome to Rails")
+    sleep 1
+  end
+
+  # Start React server
+  puts "Starting React server..."
+  Dir.chdir("client") do
+    system("npm start")
+  end
+
+end
